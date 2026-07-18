@@ -22,12 +22,7 @@ export default function SettingsForm({ initialValues, onSave, saving }) {
     <form onSubmit={handleSubmit} className="space-y-8">
       <section className="admin-card p-5 sm:p-6">
         <h3 className="mb-4 text-base font-extrabold text-ink">الهوية والصور</h3>
-        <div className="grid gap-5 sm:grid-cols-2">
-          <ImageUploadPreview
-            label="شعار العيادة"
-            value={form.logo}
-            onChange={(val) => update('logo', val)}
-          />
+        <div className="grid gap-5">
           <ImageUploadPreview
             label="صورة الصفحة الرئيسية"
             value={form.heroImage}

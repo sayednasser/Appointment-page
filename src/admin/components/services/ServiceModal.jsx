@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import * as Icons from 'lucide-react'
 import Modal from '../ui/Modal'
-import ImageUploadPreview from '../ui/ImageUploadPreview'
 
 const ICON_OPTIONS = [
   'Sparkles',
@@ -16,7 +15,7 @@ const ICON_OPTIONS = [
   'Stethoscope',
 ]
 
-const EMPTY_FORM = { name: '', description: '', image: '', icon: 'Sparkles' }
+const EMPTY_FORM = { name: '', description: '', icon: 'Sparkles' }
 
 export default function ServiceModal({ open, onClose, onSubmit, service }) {
   const [form, setForm] = useState(EMPTY_FORM)
@@ -36,7 +35,6 @@ export default function ServiceModal({ open, onClose, onSubmit, service }) {
     const next = {}
     if (!form.name.trim()) next.name = 'اسم الخدمة مطلوب'
     if (!form.description.trim()) next.description = 'وصف الخدمة مطلوب'
-    if (!form.image) next.image = 'صورة الخدمة مطلوبة'
     setErrors(next)
     return Object.keys(next).length === 0
   }
@@ -90,11 +88,10 @@ export default function ServiceModal({ open, onClose, onSubmit, service }) {
                   type="button"
                   key={iconName}
                   onClick={() => update('icon', iconName)}
-                  className={`flex h-10 w-10 items-center justify-center rounded-xl border-2 transition-colors ${
-                    active
-                      ? 'border-primary-500 bg-primary-500 text-white'
-                      : 'border-slate-200 text-ink-soft hover:border-primary-300'
-                  }`}
+                  className={`flex h-10 w-10 items-center justify-center rounded-xl border-2 transition-colors ${active
+                    ? 'border-primary-500 bg-primary-500 text-white'
+                    : 'border-slate-200 text-ink-soft hover:border-primary-300'
+                    }`}
                   aria-label={iconName}
                   title={iconName}
                 >
@@ -105,15 +102,7 @@ export default function ServiceModal({ open, onClose, onSubmit, service }) {
           </div>
         </div>
 
-        <div>
-          <ImageUploadPreview
-            label="صورة الخدمة"
-            value={form.image}
-            onChange={(val) => update('image', val)}
-            ratio="aspect-[4/3]"
-          />
-          {errors.image && <p className="mt-1 text-xs text-red-500">{errors.image}</p>}
-        </div>
+        
 
         <div className="flex justify-end gap-3 border-t border-slate-100 pt-4">
           <button type="button" onClick={onClose} className="admin-btn-outline">
