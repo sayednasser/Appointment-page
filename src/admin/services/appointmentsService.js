@@ -1,14 +1,25 @@
 import apiClient from '../api/axiosClient'
 
+function formatDate(date) {
+  if (!date) return ''
+
+  return new Date(date).toLocaleDateString('ar-EG', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
+}
 function normaliseAppointment(raw) {
   return {
     ...raw,
     id: raw._id ?? raw.id,
-    // Backend uses appointmentDate/appointmentTime; UI uses date/time
-    date: raw.appointmentDate ?? raw.date ?? '',
+
+    date: formatDate(raw.appointmentDate ?? raw.date),
+
     time: raw.appointmentTime ?? raw.time ?? '',
+
     status: raw.status ?? 'pending',
-    // doctor may be an object (populated) or a string ID
+
     doctor:
       typeof raw.doctor === 'object' && raw.doctor !== null
         ? raw.doctor.name ?? raw.doctor._id
