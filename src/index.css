@@ -1,0 +1,220 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    scroll-behavior: smooth;
+  }
+  html,
+  body {
+    font-family: 'Cairo', sans-serif;
+    overflow-x: hidden;
+    width: 100%;
+  }
+  body {
+    @apply bg-white text-ink antialiased;
+  }
+  ::selection {
+    @apply bg-primary-200 text-primary-900;
+  }
+  :focus-visible {
+    outline: 2px solid #0284c7;
+    outline-offset: 3px;
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-300 rounded-full;
+  }
+}
+
+@layer components {
+  /* Signature element used across the public site: a smile-shaped arc used
+     as a section divider, echoing the brand's core promise. */
+  .smile-divider {
+    position: relative;
+    height: 60px;
+    overflow: hidden;
+  }
+  .smile-divider svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full bg-primary-50 px-4 py-1.5 text-sm font-semibold text-primary-700 border border-primary-100;
+  }
+
+  .section-heading {
+    @apply text-3xl sm:text-4xl md:text-[2.6rem] font-extrabold text-ink leading-[1.3];
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-primary-500 px-7 py-3.5 font-bold text-white shadow-floaty transition-all duration-300 hover:bg-primary-600 hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-primary-500 px-7 py-3.5 font-bold text-primary-600 transition-all duration-300 hover:bg-primary-500 hover:text-white hover:-translate-y-0.5;
+  }
+
+  .btn-whatsapp {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 font-bold text-white shadow-md transition-all duration-300 hover:brightness-95 hover:-translate-y-0.5;
+  }
+
+  .card {
+    @apply rounded-3xl bg-white border border-slate-100 shadow-card transition-all duration-300;
+  }
+
+  .fade-section {
+    @apply opacity-0;
+  }
+
+  /* Admin-panel-specific component classes (rounded-2xl cards, form fields,
+     buttons) — kept visually distinct from the marketing site's rounder,
+     "floaty" style above, since the two apps have different design intents. */
+  .admin-card {
+    @apply rounded-2xl bg-surface-card border border-slate-100 shadow-card;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-bold transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .admin-btn-primary {
+    @apply btn bg-primary-500 text-white hover:bg-primary-600 shadow-sm hover:shadow-md;
+  }
+  .admin-btn-outline {
+    @apply btn border border-slate-200 text-ink-soft hover:bg-slate-50;
+  }
+  .admin-btn-danger {
+    @apply btn bg-red-50 text-red-600 hover:bg-red-100;
+  }
+  .btn-icon {
+    @apply inline-flex h-9 w-9 items-center justify-center rounded-lg transition-colors;
+  }
+
+  .input-field {
+    @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none transition-colors focus:border-primary-400 focus:ring-2 focus:ring-primary-100;
+  }
+  .label-field {
+    @apply mb-1.5 block text-sm font-bold text-ink;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold;
+  }
+
+  .skeleton {
+    @apply relative overflow-hidden bg-slate-200/70 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.6),transparent)] bg-[length:400px_100%] bg-no-repeat animate-shimmer;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* ── Responsive Additions ──────────────────────────────────────────────────
+   Added to support Task 2 (full responsive design).
+   These rules extend the existing design without overriding any existing rule.
+   ─────────────────────────────────────────────────────────────────────── */
+@layer utilities {
+  /* Prevent horizontal overflow on all screen sizes */
+  .overflow-x-clip {
+    overflow-x: clip;
+  }
+
+  /* Responsive hero image on small screens */
+  @media (max-width: 639px) {
+    .aspect-\[4\/5\] {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  /* Ensure images never overflow their containers */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Section padding responsive helper */
+  @media (max-width: 479px) {
+    .btn-primary,
+    .btn-outline,
+    .btn-whatsapp {
+      @apply px-5 py-3 text-sm;
+    }
+  }
+}
+
+/* ── Tasks 4–5: Mobile Experience & Responsive Audit ─────────────────────
+   Prevents horizontal scrolling site-wide, fixes small-screen text/layout
+   issues, and ensures all tap targets are appropriately sized.
+   ─────────────────────────────────────────────────────────────────────── */
+
+/* Global overflow guard */
+html, body, #root {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Prevent any absolutely-positioned child from causing horizontal overflow */
+section, header, footer, nav {
+  max-width: 100vw;
+}
+
+/* ── Navbar: clinic name fits without truncation on tiny phones ── */
+@media (max-width: 360px) {
+  /* Let the name shrink a little on the smallest phones */
+  .navbar-name {
+    font-size: 0.78rem;
+  }
+}
+
+/* ── Hero: prevent floating badge cards from overflowing on mobile ── */
+@media (max-width: 479px) {
+  /* Keep the hero badges from going off-screen on very small phones */
+  .hero-badge-right {
+    right: 0 !important;
+    left: auto !important;
+    transform: translateX(0) !important;
+  }
+  .hero-badge-left {
+    left: 0 !important;
+    right: auto !important;
+    transform: translateX(0) !important;
+  }
+}
+
+/* ── Min tap target: 44px ── */
+a[href], button {
+  min-height: 36px;
+}
+
+/* ── Inputs / selects: comfortable on mobile ── */
+input, select, textarea {
+  font-size: 16px; /* prevents iOS zoom-on-focus */
+}
+
+/* ── Gallery horizontal scroll on very small screens ── */
+@media (max-width: 479px) {
+  .gallery-mobile-scroll {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .gallery-mobile-scroll::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ── Booking slot grid: at least 2 columns on all phones ── */
+@media (max-width: 399px) {
+  .slot-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
