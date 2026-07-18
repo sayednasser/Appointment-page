@@ -4,7 +4,16 @@ import { useClinicSettings } from '../hooks/useClinicSettings'
 
 export default function FloatingWhatsapp() {
   const settings = useClinicSettings()
-  const whatsappDigits = settings?.whatsapp?.replace(/[^0-9]/g, '') || '201234567890'
+
+  // تنظيف الرقم وتحويله لصيغة واتساب الصحيحة
+  const rawPhone = settings?.whatsapp?.replace(/\D/g, '') || ''
+
+  const whatsappDigits =
+    rawPhone.startsWith('20')
+      ? rawPhone
+      : rawPhone.startsWith('0')
+        ? `20${rawPhone.slice(1)}`
+        : rawPhone
 
   return (
     <motion.a
@@ -14,7 +23,12 @@ export default function FloatingWhatsapp() {
       aria-label="تواصل عبر واتساب"
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
-      transition={{ delay: 1, type: 'spring', stiffness: 200, damping: 15 }}
+      transition={{
+        delay: 1,
+        type: 'spring',
+        stiffness: 200,
+        damping: 15,
+      }}
       whileHover={{ scale: 1.08 }}
       className="fixed bottom-6 left-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-floaty"
     >
